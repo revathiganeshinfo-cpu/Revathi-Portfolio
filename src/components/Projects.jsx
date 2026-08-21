@@ -1,855 +1,1626 @@
 import { useEffect, useRef, useState } from "react";
 
-const MAIN_PROJECTS = [
+const FRONTEND_PROJECTS = [
   {
     id: 1,
-    title: "Movie Review",
-    desc: "A full-stack movie review platform where users can browse films, write reviews, and rate movies. Features search, filtering by genre, and user authentication.",
-    tags: ["React.js", "Node.js", "MongoDB", "Express", "REST API"],
-    category: "Full Stack",
-    links: [
-      { label: "Live", url: "https://cute-horse-43fe0e.netlify.app/", icon: "↗" },
-      { label: "GitHub", url: "https://github.com/revathiganeshinfo-cpu/Project-1.git", icon: "⌥" },
-    ],
-    accent: "#f59e0b",
-    glow: "rgba(245,158,11,0.2)",
-    preview: "movie",
-  },
-  {
-    id: 2,
     title: "Invoice Builder",
-    desc: "A professional invoice generation tool that lets users create, customize, and export invoices as PDF. Includes client management and itemized billing.",
-    tags: ["React.js", "Node.js", "MongoDB", "PDF Export"],
-    category: "Full Stack",
-    links: [
-      { label: "Live", url: "https://invoiceappbuild.netlify.app/", icon: "↗" },
-      { label: "GitHub", url: "https://github.com/revathiganeshinfo-cpu/Project_2.git", icon: "⌥" },
+    desc: "A clean invoice creation app for generating professional invoices and exporting them as PDF.",
+    features: [
+      "Invoice creation",
+      "PDF export",
+      "Tax & item calculation",
     ],
+    tags: ["React.js", "Tailwind CSS", "html2canvas", "jsPDF"],
+    category: "Frontend",
+    live: "https://invoiceappbuild.netlify.app/",
+    github: "https://github.com/revathiganeshinfo-cpu/Project_2.git",
     accent: "#8b5cf6",
-    glow: "rgba(139,92,246,0.2)",
     preview: "invoice",
   },
+];
+
+const FULLSTACK_PROJECTS = [
+  {
+    id: 2,
+    title: "Movie Review Platform",
+    desc: "A full-stack movie platform where users can search movies, filter by genre, rate films, and write reviews.",
+    features: [
+      "Movie search & filters",
+      "Ratings & reviews",
+      "User authentication",
+    ],
+    tags: [
+      "React.js",
+      "Node.js",
+      "Express.js",
+      "MongoDB",
+      "REST API",
+    ],
+    category: "Full Stack",
+    live: "https://cute-horse-43fe0e.netlify.app/",
+    github: "https://github.com/revathiganeshinfo-cpu/Project-1.git",
+    accent: "#f59e0b",
+    preview: "movie",
+  },
+
   {
     id: 3,
-    title: "Restaurant Platform",
-    desc: "A complete restaurant reservation and review platform. Users can book tables, browse menus, leave reviews and ratings. Full MERN stack with live deployment.",
-    tags: ["React.js", "Node.js", "MongoDB", "Vercel", "Render"],
-    category: "Full Stack",
-    links: [
-      { label: "Live", url: "https://fsd-project-frontend.vercel.app/", icon: "↗" },
-      { label: "API", url: "https://fsd-project-backend-n2dp.onrender.com/", icon: "⚙" },
+    title: "Restaurant Reservation Platform",
+    desc: "A MERN restaurant platform for browsing restaurants, booking tables, reviews, and online payments.",
+    features: [
+      "Table reservations",
+      "Reviews & ratings",
+      "Stripe payments",
     ],
+    tags: [
+      "React.js",
+      "Node.js",
+      "Express.js",
+      "MongoDB",
+      "Stripe",
+    ],
+    category: "Full Stack",
+    live: "https://fsd-project-frontend.vercel.app/",
+    github: null,
+    backend: "https://fsd-project-backend-n2dp.onrender.com/",
     accent: "#22d3ee",
-    glow: "rgba(34,211,238,0.2)",
     preview: "restaurant",
   },
 ];
 
-const MINI_PROJECTS = [
-  {
-    title: "Recipe App",
-    desc: "A culinary guide to search, filter, and discover diverse recipes with step-by-step cooking instructions.",
-    tags: ["React", "Tailwind"],
-    accent: "#f87171",
-    icon: "🍳",
-    live: "https://recipes-app-3w4z.onrender.com/",
-    github: "https://github.com/revathiganeshinfo-cpu/Recipes-App.git",
-  },
-  {
-    title: "Router Task",
-    desc: "A multi-page React application demonstrating smooth client-side routing, nested routes, and dynamic navigation.",
-    tags: ["React"],
-    accent: "#38bdf8",
-    icon: "🚦",
-    live: "https://aesthetic-dolphin-130b52.netlify.app/",
-    github: "https://github.com/revathiganeshinfo-cpu/Task_8.git",
-  },
-  {
-    title: "Authentication & Authorization",
-    desc: "Secure user login and registration system featuring JWT authentication, password hashing, and protected API routes.",
-    tags: ["MongoDB", "Node.js", "Express"],
-    accent: "#10b981",
-    icon: "🔐",
-    live: "https://authentication-and-authorization-with-ith1.onrender.com/",
-    github: "https://github.com/revathiganeshinfo-cpu/Authentication-and-Authorization-with-Bearer-Token.git",
-  },
-  {
-    title: "Movie Searching App",
-    desc: "Real-time movie discovery platform powered by an external API with instant search, ratings, and genre filtering.",
-    tags: ["React", "Tailwind"],
-    accent: "#f59e0b",
-    icon: "🎬",
-    live: "https://elaborate-basbousa-02f89c.netlify.app/",
-    github: "https://github.com/revathiganeshinfo-cpu/Movie-Searching-App.git",
-  },
-  {
-    title: "E-Commerce Cart System",
-    desc: "A dynamic shopping cart experience featuring product listings, quantity adjustments, and real-time price calculations.",
-    tags: ["React", "Context API"],
-    accent: "#ec4899",
-    icon: "🛒",
-    live: "https://aesthetic-dolphin-130b52.netlify.app/",
-    github: "https://github.com/revathiganeshinfo-cpu/Task_8.git",
-  },
-  {
-    title: "Todo App",
-    desc: "A clean and minimal task manager with income & expense calculator. Add, complete, and delete todos with real-time balance tracking.",
-    tags: ["React", "JavaScript"],
-    accent: "#a78bfa",
-    icon: "✅",
-    live: "https://polite-sherbet-be61e7.netlify.app/",
-    github: "https://github.com/revathiganeshinfo-cpu/Task-4-Todo-App--Income-Expense-Calculator.git",
-  },
-  {
-    title: "HTML/CSS Landing Page Task",
-    desc: "A fully responsive, pixel-perfect modern landing page crafted with clean semantic structure and beautiful layouts.",
-    tags: ["HTML", "CSS"],
-    accent: "#8b5cf6",
-    icon: "🌐",
-    live: "https://frolicking-conkies-788457.netlify.app/",
-    github: "https://github.com/revathiganeshinfo-cpu/Task-1-HTML-CSS.git",
-  },
-];
+/* ---------------- ICONS ---------------- */
 
-/* ── SVG Previews ── */
+function ExternalIcon() {
+  return (
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.4"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M14 3h7v7" />
+      <path d="M10 14 21 3" />
+      <path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" />
+    </svg>
+  );
+}
+
+function GithubIcon() {
+  return (
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+    >
+      <path d="M12 .6a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2.2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.69 1.26 3.35.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.2-3.1-.12-.29-.52-1.47.12-3.06 0 0 .98-.31 3.17 1.18a10.9 10.9 0 0 1 5.77 0c2.19-1.49 3.17-1.18 3.17-1.18.64 1.59.24 2.77.12 3.06.75.81 1.2 1.84 1.2 3.1 0 4.43-2.7 5.4-5.27 5.69.41.35.78 1.04.78 2.1v3.1c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .6Z" />
+    </svg>
+  );
+}
+
+/* ---------------- PROJECT PREVIEWS ---------------- */
+
 function MoviePreview() {
   return (
-    <svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg" style={{ width: "100%", height: "100%" }}>
-      <rect width="320" height="180" fill="#0d0d1a"/>
-      <rect x="0" y="0" width="320" height="180" fill="url(#movieBg)"/>
-      <defs>
-        <linearGradient id="movieBg" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#1a0a2e"/>
-          <stop offset="100%" stopColor="#0d1117"/>
-        </linearGradient>
-      </defs>
-      {[0,1,2,3,4,5,6,7].map(i => (
-        <g key={i}>
-          <rect x={i*40} y="0" width="36" height="10" rx="1" fill="#1a1a2e" stroke="#333" strokeWidth="0.5"/>
-          <rect x={i*40+4} y="2" width="8" height="6" rx="1" fill="#0a0a15"/>
-          <rect x={i*40+16} y="2" width="8" height="6" rx="1" fill="#0a0a15"/>
-          <rect x={i*40+28} y="2" width="8" height="6" rx="1" fill="#0a0a15"/>
-        </g>
-      ))}
-      {[0,1,2,3,4,5,6,7].map(i => (
-        <g key={i}>
-          <rect x={i*40} y="170" width="36" height="10" rx="1" fill="#1a1a2e" stroke="#333" strokeWidth="0.5"/>
-          <rect x={i*40+4} y="172" width="8" height="6" rx="1" fill="#0a0a15"/>
-          <rect x={i*40+16} y="172" width="8" height="6" rx="1" fill="#0a0a15"/>
-          <rect x={i*40+28} y="172" width="8" height="6" rx="1" fill="#0a0a15"/>
-        </g>
-      ))}
-      <rect x="20" y="22" width="55" height="78" rx="4" fill="#1e1b4b"/>
-      <rect x="22" y="24" width="51" height="52" rx="3" fill="#312e81"/>
-      <rect x="25" y="28" width="45" height="44" rx="2" fill="#4c1d95"/>
-      <circle cx="47" cy="50" r="12" fill="#7c3aed" opacity="0.9"/>
-      <polygon points="44,45 44,55 54,50" fill="#f0ecff"/>
-      <rect x="22" y="80" width="30" height="3" rx="1" fill="#a78bfa"/>
-      <rect x="22" y="86" width="20" height="2" rx="1" fill="#6b7280"/>
-      {[0,1,2,3,4].map(i=>(
-        <polygon key={i} points={`${22+i*9},94 ${23.5+i*9},90 ${25+i*9},94`} fill={i<4?"#f59e0b":"#374151"}/>
-      ))}
-      <rect x="90" y="22" width="55" height="78" rx="4" fill="#1a1a2e"/>
-      <rect x="92" y="24" width="51" height="52" rx="3" fill="#1f2937"/>
-      <rect x="95" y="28" width="45" height="44" rx="2" fill="#111827"/>
-      <circle cx="117" cy="50" r="14" fill="#dc2626" opacity="0.8"/>
-      <rect x="111" y="47" width="12" height="6" rx="1" fill="#fff"/>
-      <rect x="92" y="80" width="30" height="3" rx="1" fill="#f87171"/>
-      <rect x="92" y="86" width="22" height="2" rx="1" fill="#6b7280"/>
-      {[0,1,2,3,4].map(i=>(
-        <polygon key={i} points={`${92+i*9},94 ${93.5+i*9},90 ${95+i*9},94`} fill={i<3?"#f59e0b":"#374151"}/>
-      ))}
-      <rect x="160" y="22" width="55" height="78" rx="4" fill="#1a2e1a"/>
-      <rect x="162" y="24" width="51" height="52" rx="3" fill="#14532d"/>
-      <rect x="165" y="28" width="45" height="44" rx="2" fill="#052e16"/>
-      <circle cx="187" cy="50" r="14" fill="#16a34a" opacity="0.8"/>
-      <text x="182" y="55" fontSize="14" fill="#fff" fontWeight="bold">★</text>
-      <rect x="162" y="80" width="28" height="3" rx="1" fill="#4ade80"/>
-      <rect x="162" y="86" width="18" height="2" rx="1" fill="#6b7280"/>
-      {[0,1,2,3,4].map(i=>(
-        <polygon key={i} points={`${162+i*9},94 ${163.5+i*9},90 ${165+i*9},94`} fill={i<5?"#f59e0b":"#374151"}/>
-      ))}
-      <rect x="16" y="112" width="200" height="24" rx="12" fill="#1f2937" stroke="#374151" strokeWidth="0.5"/>
-      <circle cx="30" cy="124" r="5" fill="none" stroke="#6b7280" strokeWidth="1.5"/>
-      <line x1="34" y1="128" x2="37" y2="131" stroke="#6b7280" strokeWidth="1.5"/>
-      <rect x="42" y="121" width="60" height="3" rx="1" fill="#374151"/>
-      <rect x="230" y="20" width="70" height="140" rx="8" fill="#0f0f1a" stroke="#1f2937" strokeWidth="0.5"/>
-      <rect x="238" y="30" width="54" height="3" rx="1" fill="#7c3aed"/>
-      {[["All",30],["Action",48],["Drama",44],["Sci-Fi",42],["Horror",50],["Comedy",46],["Romance",54]].map(([g,w],i)=>(
-        <rect key={g} x="238" y={42+i*16} width={w} height="2.5" rx="1" fill={i===0?"#a78bfa":"#2d3748"}/>
-      ))}
-    </svg>
+    <div className="preview movie-preview">
+      <div className="movie-header">
+        <strong>
+          MOVIE<span>HUB</span>
+        </strong>
+
+        <div className="movie-menu">
+          <i />
+          <i />
+          <i />
+        </div>
+      </div>
+
+      <div className="movie-content">
+        <small>FEATURED</small>
+
+        <h4>
+          Discover Your
+          <br />
+          Next Favorite Movie
+        </h4>
+
+        <div className="stars">★★★★★</div>
+      </div>
+
+      <div className="movie-posters">
+        <div />
+        <div />
+        <div />
+        <div />
+      </div>
+    </div>
   );
 }
 
 function InvoicePreview() {
   return (
-    <svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg" style={{ width: "100%", height: "100%" }}>
-      <rect width="320" height="180" fill="#0b0c10"/>
-      <defs>
-        <linearGradient id="invBg" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#1a0a2e"/>
-          <stop offset="100%" stopColor="#0d0d1a"/>
-        </linearGradient>
-      </defs>
-      <rect width="320" height="180" fill="url(#invBg)"/>
-      <rect x="20" y="14" width="200" height="155" rx="8" fill="#111827" stroke="#1f2937" strokeWidth="0.5"/>
-      <rect x="20" y="14" width="200" height="36" rx="8" fill="#1e1b4b"/>
-      <rect x="20" y="36" width="200" height="14" fill="#1e1b4b"/>
-      <rect x="30" y="22" width="50" height="4" rx="2" fill="#a78bfa"/>
-      <rect x="30" y="30" width="35" height="2.5" rx="1" fill="#6d28d9" opacity="0.7"/>
-      <rect x="170" y="20" width="40" height="22" rx="4" fill="#7c3aed" opacity="0.3"/>
-      <rect x="175" y="25" width="30" height="3" rx="1" fill="#c4b5fd"/>
-      <rect x="178" y="31" width="24" height="2.5" rx="1" fill="#a78bfa" opacity="0.6"/>
-      <rect x="30" y="58" width="25" height="2" rx="1" fill="#6b7280"/>
-      <rect x="30" y="64" width="55" height="3" rx="1" fill="#e5e7eb"/>
-      <rect x="30" y="70" width="45" height="2" rx="1" fill="#4b5563"/>
-      <rect x="30" y="75" width="38" height="2" rx="1" fill="#4b5563"/>
-      <rect x="28" y="88" width="184" height="14" rx="3" fill="#1f2937"/>
-      <rect x="32" y="93" width="40" height="2" rx="1" fill="#6b7280"/>
-      <rect x="120" y="93" width="25" height="2" rx="1" fill="#6b7280"/>
-      <rect x="160" y="93" width="20" height="2" rx="1" fill="#6b7280"/>
-      <rect x="192" y="93" width="15" height="2" rx="1" fill="#6b7280"/>
-      {[0,1,2].map(i => (
-        <g key={i}>
-          <rect x="28" y={108+i*14} width="184" height="12" rx="2" fill={i%2===0?"#111827":"#0f172a"}/>
-          <rect x="32" y={112+i*14} width={35+i*8} height="2" rx="1" fill="#d1d5db"/>
-          <rect x="122" y={112+i*14} width="18" height="2" rx="1" fill="#9ca3af"/>
-          <rect x="163" y={112+i*14} width="14" height="2" rx="1" fill="#9ca3af"/>
-          <rect x="194" y={112+i*14} width="14" height="2" rx="1" fill="#a78bfa"/>
-        </g>
-      ))}
-      <line x1="28" y1="150" x2="212" y2="150" stroke="#374151" strokeWidth="0.5"/>
-      <rect x="155" y="154" width="25" height="2.5" rx="1" fill="#6b7280"/>
-      <rect x="185" y="154" width="20" height="2.5" rx="1" fill="#8b5cf6"/>
-      <rect x="234" y="14" width="72" height="155" rx="8" fill="#0f172a" stroke="#1f2937" strokeWidth="0.5"/>
-      <rect x="242" y="24" width="56" height="3" rx="1" fill="#7c3aed"/>
-      {["Client","Date","Due","Status"].map((l,i)=>(
-        <g key={l}>
-          <rect x="242" y={36+i*22} width="22" height="2" rx="1" fill="#4b5563"/>
-          <rect x="242" y={41+i*22} width={l==="Status"?28:32} height="3" rx="1" fill={l==="Status"?"#a78bfa":"#9ca3af"}/>
-        </g>
-      ))}
-      <rect x="242" y="128" width="56" height="18" rx="9" fill="#7c3aed"/>
-      <rect x="252" y="134" width="28" height="2.5" rx="1" fill="#fff"/>
-      <rect x="258" y="138" width="16" height="1.5" rx="1" fill="#c4b5fd"/>
-    </svg>
+    <div className="preview invoice-preview">
+      <div className="invoice-paper">
+        <div className="invoice-heading">
+          <strong>INVOICE</strong>
+          <span>#INV-2026</span>
+        </div>
+
+        <div className="invoice-purple-line" />
+
+        <div className="invoice-info">
+          <div>
+            <small>BILL TO</small>
+            <span>Client Name</span>
+            <span>client@email.com</span>
+          </div>
+
+          <div>
+            <small>DATE</small>
+            <span>21 Aug 2026</span>
+          </div>
+        </div>
+
+        <div className="invoice-table">
+          <div>
+            <span>ITEM</span>
+            <span>AMOUNT</span>
+          </div>
+
+          <div>
+            <span>Design Service</span>
+            <span>$450</span>
+          </div>
+
+          <div>
+            <span>Development</span>
+            <span>$800</span>
+          </div>
+
+          <div>
+            <span>Tax</span>
+            <span>$125</span>
+          </div>
+        </div>
+
+        <div className="invoice-total">
+          <span>TOTAL</span>
+          <strong>$1,375</strong>
+        </div>
+      </div>
+    </div>
   );
 }
 
 function RestaurantPreview() {
   return (
-    <svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg" style={{ width: "100%", height: "100%" }}>
-      <defs>
-        <linearGradient id="restBg" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#0d1f1a"/>
-          <stop offset="100%" stopColor="#0b0c10"/>
-        </linearGradient>
-      </defs>
-      <rect width="320" height="180" fill="url(#restBg)"/>
-      <rect x="0" y="0" width="320" height="28" fill="#0a1a14" opacity="0.9"/>
-      <rect x="14" y="10" width="30" height="3" rx="1" fill="#22d3ee"/>
-      <rect x="14" y="16" width="20" height="2" rx="1" fill="#0e9f6e" opacity="0.6"/>
-      {["Menu","Reserve","Reviews"].map((n,i)=>(
-        <rect key={n} x={180+i*40} y="12" width="28" height="2.5" rx="1" fill={i===1?"#22d3ee":"#374151"}/>
-      ))}
-      <rect x="0" y="28" width="320" height="60" fill="#052e16" opacity="0.4"/>
-      <rect x="0" y="28" width="320" height="60" fill="url(#restHero)"/>
-      <defs>
-        <linearGradient id="restHero" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#064e3b" stopOpacity="0.5"/>
-          <stop offset="100%" stopColor="#0b0c10" stopOpacity="0.9"/>
-        </linearGradient>
-      </defs>
-      <circle cx="280" cy="50" r="35" fill="#22d3ee" opacity="0.05"/>
-      <circle cx="40" cy="35" r="20" fill="#16a34a" opacity="0.08"/>
-      <rect x="30" y="36" width="120" height="5" rx="2" fill="#f0fdf4" opacity="0.9"/>
-      <rect x="30" y="46" width="80" height="3" rx="1" fill="#6ee7b7" opacity="0.7"/>
-      <rect x="30" y="60" width="55" height="14" rx="7" fill="#22d3ee"/>
-      <rect x="36" y="65" width="43" height="2.5" rx="1" fill="#fff"/>
-      <rect x="96" y="60" width="55" height="14" rx="7" fill="none" stroke="#22d3ee" strokeWidth="1"/>
-      <rect x="102" y="65" width="43" height="2.5" rx="1" fill="#22d3ee"/>
-      <rect x="14" y="100" width="68" height="72" rx="6" fill="#111827" stroke="#1f2937" strokeWidth="0.5"/>
-      <rect x="14" y="100" width="68" height="35" rx="6" fill="#065f46"/>
-      <rect x="14" y="118" width="68" height="17" fill="#065f46"/>
-      <circle cx="48" cy="117" r="10" fill="#10b981" opacity="0.6"/>
-      <text x="44" y="121" fontSize="10" fill="#fff">🍜</text>
-      <rect x="20" y="141" width="40" height="3" rx="1" fill="#d1fae5"/>
-      <rect x="20" y="148" width="28" height="2" rx="1" fill="#6b7280"/>
-      <rect x="20" y="154" width="20" height="2" rx="1" fill="#22d3ee"/>
-      <rect x="46" y="153" width="28" height="8" rx="4" fill="#22d3ee"/>
-      <rect x="50" y="156" width="20" height="2" rx="1" fill="#fff"/>
-      <rect x="90" y="100" width="68" height="72" rx="6" fill="#111827" stroke="#1f2937" strokeWidth="0.5"/>
-      <rect x="90" y="100" width="68" height="35" rx="6" fill="#7c2d12"/>
-      <rect x="90" y="118" width="68" height="17" fill="#7c2d12"/>
-      <circle cx="124" cy="117" r="10" fill="#ef4444" opacity="0.6"/>
-      <text x="120" y="121" fontSize="10" fill="#fff">🍕</text>
-      <rect x="96" y="141" width="40" height="3" rx="1" fill="#fecdd3"/>
-      <rect x="96" y="148" width="28" height="2" rx="1" fill="#6b7280"/>
-      <rect x="96" y="154" width="22" height="2" rx="1" fill="#f87171"/>
-      <rect x="122" y="153" width="28" height="8" rx="4" fill="#dc2626"/>
-      <rect x="126" y="156" width="20" height="2" rx="1" fill="#fff"/>
-      <rect x="172" y="95" width="132" height="78" rx="8" fill="#0f2a20" stroke="#14532d" strokeWidth="0.5"/>
-      <rect x="180" y="103" width="60" height="3" rx="1" fill="#22d3ee"/>
-      <rect x="180" y="111" width="116" height="14" rx="4" fill="#1f2937"/>
-      <rect x="185" y="116" width="50" height="2.5" rx="1" fill="#4b5563"/>
-      <rect x="180" y="129" width="52" height="14" rx="4" fill="#1f2937"/>
-      <rect x="185" y="134" width="35" height="2.5" rx="1" fill="#4b5563"/>
-      <rect x="236" y="129" width="52" height="14" rx="4" fill="#1f2937"/>
-      <rect x="241" y="134" width="35" height="2.5" rx="1" fill="#4b5563"/>
-      <rect x="180" y="148" width="108" height="18" rx="9" fill="#0e9f6e"/>
-      <rect x="208" y="155" width="52" height="3" rx="1" fill="#fff"/>
-    </svg>
-  );
-}
+    <div className="preview restaurant-preview">
+      <div className="restaurant-header">
+        <span className="restaurant-logo">R</span>
 
-const PREVIEWS = { movie: MoviePreview, invoice: InvoicePreview, restaurant: RestaurantPreview };
-
-function MainCard({ project, index, started }) {
-  const [hovered, setHovered] = useState(false);
-  const Preview = PREVIEWS[project.preview];
-
-  return (
-    <div
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      style={{
-        background: "rgba(11,12,16,0.8)",
-        border: `1px solid ${hovered ? project.accent + "55" : "rgba(255,255,255,0.07)"}`,
-        borderRadius: 18,
-        overflow: "hidden",
-        transition: "all 0.4s cubic-bezier(0.22,1,0.36,1)",
-        transform: hovered ? "translateY(-10px)" : "translateY(0)",
-        boxShadow: hovered ? `0 30px 60px ${project.glow}` : "none",
-        opacity: started ? 1 : 0,
-        animation: started ? `projFade 0.7s ease ${index * 0.15}s both` : "none",
-        backdropFilter: "blur(12px)",
-      }}
-    >
-      <div style={{ height: 180, overflow: "hidden", position: "relative", background: "#0b0c10" }}>
-        <Preview />
-        <div style={{
-          position: "absolute", inset: 0,
-          background: `linear-gradient(to top, rgba(11,12,16,0.95) 0%, transparent 60%)`,
-          opacity: hovered ? 1 : 0.6,
-          transition: "opacity 0.4s",
-        }}/>
-        <div style={{
-          position: "absolute", top: 12, right: 12,
-          padding: "4px 12px", borderRadius: 9999,
-          background: "rgba(11,12,16,0.8)",
-          border: `1px solid ${project.accent}44`,
-          fontSize: "0.6rem", fontWeight: 300, letterSpacing: "0.14em",
-          textTransform: "uppercase", color: project.accent,
-          backdropFilter: "blur(8px)",
-        }}>
-          {project.category}
+        <div>
+          <i />
+          <i />
+          <i />
         </div>
       </div>
 
-      <div style={{ padding: "22px 24px" }}>
-        <h3 style={{
-          fontSize: "1.05rem", fontWeight: 500, letterSpacing: "0.04em",
-          color: hovered ? "#fff" : "#e2e2e2",
-          marginBottom: 10, transition: "color 0.3s",
-        }}>
-          {project.title}
-        </h3>
-        <p style={{
-          fontSize: "0.78rem", fontWeight: 300, lineHeight: 1.7,
-          color: "rgba(255,255,255,0.4)", marginBottom: 18,
-        }}>
+      <div className="restaurant-content">
+        <small>FINE DINING</small>
+
+        <h4>Reserve Your Table</h4>
+
+        <span />
+      </div>
+
+      <div className="restaurant-cards">
+        <div>
+          <i />
+          <strong>Italian House</strong>
+          <small>★★★★★ · Chennai</small>
+        </div>
+
+        <div>
+          <i />
+          <strong>Urban Kitchen</strong>
+          <small>★★★★☆ · Chennai</small>
+        </div>
+
+        <div>
+          <i />
+          <strong>The Garden</strong>
+          <small>★★★★★ · Chennai</small>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ProjectPreview({ type }) {
+  if (type === "invoice") {
+    return <InvoicePreview />;
+  }
+
+  if (type === "restaurant") {
+    return <RestaurantPreview />;
+  }
+
+  return <MoviePreview />;
+}
+
+/* ---------------- PROJECT CARD ---------------- */
+
+function ProjectCard({ project, index, visible }) {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <article
+      className={`project-card ${hovered ? "project-card-hover" : ""}`}
+      style={{
+        "--accent": project.accent,
+        "--delay": `${index * 0.1}s`,
+        opacity: visible ? 1 : 0,
+      }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      {/* Preview */}
+
+      <div className="project-preview">
+        <ProjectPreview type={project.preview} />
+
+        <span className="project-category">
+          {project.category}
+        </span>
+      </div>
+
+      {/* Content */}
+
+      <div className="project-content">
+
+        <div className="project-title-row">
+          <div className="project-title-wrap">
+            <span className="project-number">
+              0{project.id}
+            </span>
+
+            <h3>{project.title}</h3>
+          </div>
+
+          <span className="project-label">
+            PROJECT
+          </span>
+        </div>
+
+        <p className="project-description">
           {project.desc}
         </p>
 
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 20 }}>
-          {project.tags.map(tag => (
-            <span key={tag} style={{
-              padding: "3px 10px", borderRadius: 9999,
-              fontSize: "0.62rem", fontWeight: 300, letterSpacing: "0.1em",
-              background: `${project.accent}11`,
-              border: `1px solid ${project.accent}33`,
-              color: project.accent,
-            }}>
-              {tag}
+        {/* Features */}
+
+        <div className="project-features">
+          {project.features.map((feature) => (
+            <span key={feature}>
+              <b>✓</b>
+              {feature}
             </span>
           ))}
         </div>
 
-        <div style={{ display: "flex", gap: 10 }}>
-          {project.links.map(link => (
-            <a
-              key={link.label}
-              href={link.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: "inline-flex", alignItems: "center", gap: 6,
-                padding: "8px 18px", borderRadius: 9999,
-                fontSize: "0.7rem", fontWeight: 300, letterSpacing: "0.14em",
-                textDecoration: "none", textTransform: "uppercase",
-                background: link.label === "Live"
-                  ? `linear-gradient(135deg, ${project.accent}cc, ${project.accent}88)`
-                  : `${project.accent}11`,
-                border: `1px solid ${project.accent}44`,
-                color: link.label === "Live" ? "#000" : project.accent,
-                transition: "all 0.3s cubic-bezier(0.34,1.56,0.64,1)",
-              }}
-              onMouseEnter={e => {
-                e.currentTarget.style.transform = "scale(1.06)";
-                e.currentTarget.style.boxShadow = `0 4px 16px ${project.glow}`;
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.transform = "scale(1)";
-                e.currentTarget.style.boxShadow = "none";
-              }}
-            >
-              <span>{link.icon}</span>
-              <span>{link.label}</span>
-            </a>
+        {/* Technologies */}
+
+        <div className="project-tags">
+          {project.tags.map((tag) => (
+            <span key={tag}>{tag}</span>
           ))}
         </div>
-      </div>
 
-      <div style={{
-        height: 2,
-        background: `linear-gradient(90deg, transparent, ${project.accent}, transparent)`,
-        opacity: hovered ? 1 : 0,
-        transition: "opacity 0.4s",
-      }}/>
-    </div>
-  );
-}
+        {/* Buttons */}
 
-/* ── GitHub SVG Icon ── */
-function GithubIcon() {
-  return (
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
-    </svg>
-  );
-}
+        <div className="project-actions">
 
-function MiniCard({ project, index, started }) {
-  const [hovered, setHovered] = useState(false);
-  const hasLinks = project.live || project.github;
+          <a
+            href={project.live}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="project-button live-button"
+          >
+            <ExternalIcon />
+            Live Demo
+          </a>
 
-  return (
-    <div
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      style={{
-        background: "rgba(11,12,16,0.75)",
-        border: `1px solid ${hovered ? project.accent + "44" : "rgba(255,255,255,0.06)"}`,
-        borderRadius: 14,
-        padding: "22px 20px",
-        transition: "all 0.35s cubic-bezier(0.34,1.56,0.64,1)",
-        transform: hovered ? "translateY(-6px) scale(1.02)" : "translateY(0) scale(1)",
-        boxShadow: hovered ? `0 16px 32px ${project.accent}22` : "none",
-        opacity: started ? 1 : 0,
-        animation: started ? `projFade 0.6s ease ${0.4 + index * 0.08}s both` : "none",
-        backdropFilter: "blur(10px)",
-        cursor: "default",
-        position: "relative",
-        overflow: "hidden",
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
-      {/* Radial glow bg */}
-      <div style={{
-        position: "absolute", inset: 0, borderRadius: 14,
-        background: hovered
-          ? `radial-gradient(circle at 30% 30%, ${project.accent}12, transparent 65%)`
-          : "transparent",
-        transition: "all 0.4s",
-        pointerEvents: "none",
-      }}/>
-
-      {/* Icon */}
-      <div style={{
-        fontSize: 22, marginBottom: 14,
-        display: "inline-flex", alignItems: "center", justifyContent: "center",
-        width: 44, height: 44, borderRadius: 10,
-        background: `${project.accent}14`,
-        border: `1px solid ${project.accent}33`,
-        transition: "transform 0.3s, box-shadow 0.3s",
-        transform: hovered ? "rotate(-5deg) scale(1.1)" : "none",
-        boxShadow: hovered ? `0 4px 16px ${project.accent}33` : "none",
-        position: "relative",
-      }}>
-        {project.icon}
-      </div>
-
-      {/* Title */}
-      <div style={{
-        fontSize: "0.88rem", fontWeight: 400,
-        color: hovered ? "#fff" : "#e2e2e2",
-        marginBottom: 8, transition: "color 0.3s",
-        position: "relative",
-      }}>
-        {project.title}
-      </div>
-
-      {/* Desc */}
-      <p style={{
-        fontSize: "0.72rem", fontWeight: 300, lineHeight: 1.65,
-        color: "rgba(255,255,255,0.35)", marginBottom: 14,
-        position: "relative", flexGrow: 1,
-      }}>
-        {project.desc}
-      </p>
-
-      {/* Tags */}
-      <div style={{ display: "flex", gap: 6, flexWrap: "wrap", position: "relative", marginBottom: hasLinks ? 14 : 0 }}>
-        {project.tags.map(tag => (
-          <span key={tag} style={{
-            padding: "3px 9px", borderRadius: 9999,
-            fontSize: "0.6rem", fontWeight: 300, letterSpacing: "0.1em",
-            background: `${project.accent}0f`,
-            border: `1px solid ${project.accent}2a`,
-            color: project.accent,
-          }}>
-            {tag}
-          </span>
-        ))}
-      </div>
-
-      {/* ── Live + GitHub Buttons ── */}
-      {hasLinks && (
-        <div style={{
-          display: "flex", gap: 8, position: "relative",
-          borderTop: `1px solid rgba(255,255,255,0.05)`,
-          paddingTop: 12, marginTop: 2,
-        }}>
-          {project.live && (
-            <a
-              href={project.live}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ textDecoration: "none", flex: 1 }}
-            >
-              <button
-                style={{
-                  width: "100%",
-                  padding: "7px 0",
-                  borderRadius: 8,
-                  background: `linear-gradient(135deg, ${project.accent}33, ${project.accent}18)`,
-                  border: `1px solid ${project.accent}55`,
-                  color: project.accent,
-                  fontSize: "0.65rem",
-                  fontFamily: "'Poppins', sans-serif",
-                  letterSpacing: "0.14em",
-                  textTransform: "uppercase",
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: 5,
-                  transition: "all 0.25s cubic-bezier(0.34,1.56,0.64,1)",
-                }}
-                onMouseEnter={e => {
-                  e.currentTarget.style.background = `linear-gradient(135deg, ${project.accent}55, ${project.accent}33)`;
-                  e.currentTarget.style.transform = "translateY(-2px)";
-                  e.currentTarget.style.boxShadow = `0 6px 20px ${project.accent}33`;
-                }}
-                onMouseLeave={e => {
-                  e.currentTarget.style.background = `linear-gradient(135deg, ${project.accent}33, ${project.accent}18)`;
-                  e.currentTarget.style.transform = "translateY(0)";
-                  e.currentTarget.style.boxShadow = "none";
-                }}
-              >
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                  <polyline points="15 3 21 3 21 9"/>
-                  <line x1="10" y1="14" x2="21" y2="3"/>
-                </svg>
-                Live
-              </button>
-            </a>
-          )}
-
-          {project.github && (
+          {project.github ? (
             <a
               href={project.github}
               target="_blank"
               rel="noopener noreferrer"
-              style={{ textDecoration: "none", flex: 1 }}
+              className="project-button github-button"
             >
-              <button
-                style={{
-                  width: "100%",
-                  padding: "7px 0",
-                  borderRadius: 8,
-                  background: "rgba(255,255,255,0.04)",
-                  border: "1px solid rgba(255,255,255,0.1)",
-                  color: "rgba(255,255,255,0.5)",
-                  fontSize: "0.65rem",
-                  fontFamily: "'Poppins', sans-serif",
-                  letterSpacing: "0.14em",
-                  textTransform: "uppercase",
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: 5,
-                  transition: "all 0.25s cubic-bezier(0.34,1.56,0.64,1)",
-                }}
-                onMouseEnter={e => {
-                  e.currentTarget.style.background = "rgba(255,255,255,0.1)";
-                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.25)";
-                  e.currentTarget.style.color = "#fff";
-                  e.currentTarget.style.transform = "translateY(-2px)";
-                  e.currentTarget.style.boxShadow = "0 6px 20px rgba(255,255,255,0.08)";
-                }}
-                onMouseLeave={e => {
-                  e.currentTarget.style.background = "rgba(255,255,255,0.04)";
-                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
-                  e.currentTarget.style.color = "rgba(255,255,255,0.5)";
-                  e.currentTarget.style.transform = "translateY(0)";
-                  e.currentTarget.style.boxShadow = "none";
-                }}
-              >
-                <GithubIcon />
-                Code
-              </button>
+              <GithubIcon />
+              GitHub
+            </a>
+          ) : (
+            <a
+              href={project.backend}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="project-button github-button"
+            >
+              <ExternalIcon />
+              Backend
             </a>
           )}
 
-          {/* If only one button, show disabled placeholder for the other */}
-          {project.live && !project.github && (
-            <button
-              disabled
-              style={{
-                flex: 1, padding: "7px 0", borderRadius: 8,
-                background: "rgba(255,255,255,0.02)",
-                border: "1px solid rgba(255,255,255,0.05)",
-                color: "rgba(255,255,255,0.18)",
-                fontSize: "0.65rem",
-                fontFamily: "'Poppins', sans-serif",
-                letterSpacing: "0.14em",
-                textTransform: "uppercase",
-                cursor: "not-allowed",
-                display: "flex", alignItems: "center", justifyContent: "center", gap: 5,
-              }}
-            >
-              <GithubIcon />
-              Soon
-            </button>
-          )}
-
-          {project.github && !project.live && (
-            <button
-              disabled
-              style={{
-                flex: 1, padding: "7px 0", borderRadius: 8,
-                background: "rgba(255,255,255,0.02)",
-                border: "1px solid rgba(255,255,255,0.05)",
-                color: "rgba(255,255,255,0.18)",
-                fontSize: "0.65rem",
-                fontFamily: "'Poppins', sans-serif",
-                letterSpacing: "0.14em",
-                textTransform: "uppercase",
-                cursor: "not-allowed",
-                display: "flex", alignItems: "center", justifyContent: "center", gap: 5,
-              }}
-            >
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                <polyline points="15 3 21 3 21 9"/>
-                <line x1="10" y1="14" x2="21" y2="3"/>
-              </svg>
-              Soon
-            </button>
-          )}
         </div>
-      )}
 
-      {/* Bottom glow line */}
-      <div style={{
-        position: "absolute", bottom: 0, left: 0, right: 0, height: 2,
-        background: `linear-gradient(90deg, transparent, ${project.accent}, transparent)`,
-        opacity: hovered ? 1 : 0, transition: "opacity 0.3s",
-        borderRadius: "0 0 14px 14px",
-      }}/>
+      </div>
+    </article>
+  );
+}
+
+/* ---------------- PROJECT GROUP ---------------- */
+
+function ProjectGroup({ title, projects, visible }) {
+  return (
+    <div className="project-group">
+
+      <div className="project-group-heading">
+        <span>{title}</span>
+        <div />
+      </div>
+
+      <div className="projects-grid">
+
+        {projects.map((project, index) => (
+          <ProjectCard
+            key={project.id}
+            project={project}
+            index={index}
+            visible={visible}
+          />
+        ))}
+
+      </div>
     </div>
   );
 }
 
+/* ---------------- MAIN COMPONENT ---------------- */
+
 export default function Projects() {
   const sectionRef = useRef(null);
+
   const [visible, setVisible] = useState(false);
-  const [started, setStarted] = useState(false);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
+    const element = sectionRef.current;
+
+    if (!element) return;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setVisible(true);
-          setTimeout(() => setStarted(true), 200);
+          observer.disconnect();
         }
       },
-      { threshold: 0.08 }
+      {
+        threshold: 0.12,
+      }
     );
-    if (sectionRef.current) observer.observe(sectionRef.current);
+
+    observer.observe(element);
+
     return () => observer.disconnect();
   }, []);
-
-  const fadeUp = (delay = 0) => ({
-    opacity: visible ? 1 : 0,
-    transform: visible ? "translateY(0)" : "translateY(28px)",
-    transition: `opacity 0.7s ease ${delay}s, transform 0.7s cubic-bezier(0.22,1,0.36,1) ${delay}s`,
-  });
 
   return (
     <>
       <style>{`
+
+        /* ==============================
+           PROJECT SECTION
+        ============================== */
+
         .projects-section {
           min-height: 100vh;
+
           margin-left: 230px;
+
           padding: 7rem 5vw 6rem;
-          font-family: 'Poppins', sans-serif;
+
+          font-family: "Poppins", sans-serif;
+
           background:
-            linear-gradient(rgba(11,12,16,0.82), rgba(11,12,16,0.92)),
-            url('/src/assets/bg1.jpg');
+            linear-gradient(
+              rgba(11,12,16,0.92),
+              rgba(11,12,16,0.97)
+            ),
+            url("/src/assets/bg1.jpg");
+
           background-size: cover;
           background-position: center;
-          background-attachment: fixed;
-          color: #e2e2e2;
+
+          color: #e8e8ea;
+
           position: relative;
+
           overflow: hidden;
         }
+
         .projects-section::before {
-          content: '';
-          position: absolute; inset: 0;
-          background-image: repeating-linear-gradient(
-            -55deg, transparent, transparent 60px,
-            rgba(255,255,255,0.01) 60px, rgba(255,255,255,0.01) 61px
-          );
+          content: "";
+
+          position: absolute;
+
+          inset: 0;
+
+          background:
+            radial-gradient(
+              circle at 85% 15%,
+              rgba(139,92,246,0.09),
+              transparent 28%
+            ),
+
+            radial-gradient(
+              circle at 10% 80%,
+              rgba(34,211,238,0.05),
+              transparent 25%
+            );
+
           pointer-events: none;
         }
-        .pr-mouse-glow {
-          position: absolute; width: 600px; height: 600px;
-          border-radius: 50%;
-          background: radial-gradient(circle, rgba(139,92,246,0.05), transparent 70%);
-          pointer-events: none;
-          transform: translate(-50%, -50%);
-          transition: left 0.15s ease, top 0.15s ease;
-          z-index: 0;
+
+        .pr-inner {
+          position: relative;
+
+          z-index: 1;
+
+          max-width: 1120px;
+
+          margin: 0 auto;
         }
-        .pr-orb {
-          position: absolute; border-radius: 50%;
-          filter: blur(80px); opacity: 0.09; pointer-events: none;
-        }
-        .pr-inner { position: relative; z-index: 1; max-width: 1100px; }
+
+        /* ==============================
+           SECTION HEADING
+        ============================== */
+
         .pr-label {
-          display: inline-flex; align-items: center; gap: 10px;
-          font-size: 0.7rem; font-weight: 300; letter-spacing: 0.3em;
-          text-transform: uppercase; color: #8b5cf6; margin-bottom: 1.2rem;
+          display: inline-flex;
+
+          align-items: center;
+
+          gap: 10px;
+
+          margin-bottom: 1rem;
+
+          color: #a78bfa;
+
+          font-size: 0.75rem;
+
+          font-weight: 500;
+
+          letter-spacing: 0.22em;
+
+          text-transform: uppercase;
         }
-        .pr-label-line { width: 28px; height: 1px; background: #8b5cf6; }
+
+        .pr-label-line {
+          width: 30px;
+
+          height: 1px;
+
+          background: #a78bfa;
+        }
+
         .pr-title {
-          font-size: clamp(3rem, 5.5vw, 5.5rem);
-          color: #f0ecff; line-height: 1.05; margin-bottom: 0.5rem;
+          margin: 0;
+
+          color: #f5f3ff;
+
+          font-size: clamp(
+            2.8rem,
+            5vw,
+            5rem
+          );
+
+          line-height: 1.05;
+
+          font-weight: 600;
+
+          letter-spacing: -0.03em;
         }
+
         .pr-divider {
-          width: 60px; height: 2px;
-          background: linear-gradient(90deg, #8b5cf6, transparent);
-          border-radius: 2px; margin-bottom: 0.8rem;
+          width: 70px;
+
+          height: 2px;
+
+          margin: 1rem 0;
+
+          background:
+            linear-gradient(
+              90deg,
+              #8b5cf6,
+              transparent
+            );
         }
+
         .pr-subtitle {
-          font-size: 0.8rem; font-weight: 300; letter-spacing: 0.08em;
-          color: rgba(255,255,255,0.3); margin-bottom: 3.5rem;
-          border-left: 2px solid rgba(139,92,246,0.3);
+          max-width: 650px;
+
+          margin: 0 0 4rem;
+
           padding-left: 1rem;
+
+          border-left: 2px solid
+            rgba(139,92,246,0.45);
+
+          color:
+            rgba(255,255,255,0.62);
+
+          font-size: 0.95rem;
+
+          line-height: 1.7;
+
+          font-weight: 400;
         }
-        .pr-main-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-          gap: 22px;
-          margin-bottom: 4rem;
+
+        /* ==============================
+           GROUP
+        ============================== */
+
+        .project-group {
+          margin-bottom: 4.5rem;
         }
-        .pr-section-label {
-          display: flex; align-items: center; gap: 14px;
-          margin-bottom: 1.8rem;
+
+        .project-group-heading {
+          display: flex;
+
+          align-items: center;
+
+          gap: 16px;
+
+          margin-bottom: 1.4rem;
         }
-        .pr-section-label-text {
-          font-size: 0.65rem; font-weight: 300; letter-spacing: 0.26em;
-          text-transform: uppercase; color: rgba(255,255,255,0.3);
+
+        .project-group-heading span {
+          color:
+            rgba(255,255,255,0.72);
+
+          font-size: 0.78rem;
+
+          font-weight: 600;
+
+          letter-spacing: 0.18em;
+
+          text-transform: uppercase;
+
           white-space: nowrap;
         }
-        .pr-section-label-line {
-          flex: 1; height: 1px;
-          background: linear-gradient(90deg, rgba(139,92,246,0.3), transparent);
+
+        .project-group-heading div {
+          height: 1px;
+
+          flex: 1;
+
+          background:
+            linear-gradient(
+              90deg,
+              rgba(139,92,246,0.35),
+              transparent
+            );
         }
-        .pr-mini-grid {
+
+        /* ==============================
+           GRID
+        ============================== */
+
+        .projects-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+
+          grid-template-columns:
+            repeat(
+              2,
+              minmax(0, 1fr)
+            );
+
+          gap: 28px;
+        }
+
+        /* ==============================
+           CARD
+        ============================== */
+
+        .project-card {
+          --accent: #8b5cf6;
+
+          background:
+            rgba(13,14,20,0.9);
+
+          border:
+            1px solid
+            rgba(255,255,255,0.1);
+
+          border-radius: 18px;
+
+          overflow: hidden;
+
+          box-shadow:
+            0 12px 35px
+            rgba(0,0,0,0.22);
+
+          transform:
+            translateY(18px);
+
+          animation:
+            projectEnter
+            0.55s
+            ease
+            var(--delay)
+            forwards;
+
+          transition:
+            transform 0.25s ease,
+            border-color 0.25s ease,
+            box-shadow 0.25s ease;
+        }
+
+        .project-card-hover {
+          transform:
+            translateY(-4px);
+
+          border-color:
+            var(--accent);
+
+          box-shadow:
+            0 18px 45px
+            rgba(0,0,0,0.34);
+        }
+
+        /* ==============================
+           PREVIEW
+        ============================== */
+
+        .project-preview {
+          height: 215px;
+
+          position: relative;
+
+          overflow: hidden;
+
+          border-bottom:
+            1px solid
+            rgba(255,255,255,0.08);
+        }
+
+        .preview {
+          width: 100%;
+          height: 100%;
+
+          position: relative;
+
+          overflow: hidden;
+        }
+
+        .project-category {
+          position: absolute;
+
+          top: 14px;
+
+          right: 14px;
+
+          z-index: 5;
+
+          padding:
+            5px 10px;
+
+          border:
+            1px solid
+            rgba(255,255,255,0.14);
+
+          border-radius: 999px;
+
+          background:
+            rgba(8,9,14,0.75);
+
+          color:
+            rgba(255,255,255,0.75);
+
+          font-size: 0.62rem;
+
+          font-weight: 600;
+
+          letter-spacing: 0.1em;
+
+          text-transform: uppercase;
+        }
+
+        /* ==============================
+           MOVIE PREVIEW
+        ============================== */
+
+        .movie-preview {
+          padding: 22px;
+
+          background:
+            radial-gradient(
+              circle at 70% 25%,
+              rgba(124,58,237,0.35),
+              transparent 30%
+            ),
+
+            linear-gradient(
+              135deg,
+              #10091d,
+              #090d14
+            );
+        }
+
+        .movie-header {
+          display: flex;
+
+          justify-content:
+            space-between;
+
+          align-items: center;
+        }
+
+        .movie-header strong {
+          color: white;
+
+          font-size: 0.82rem;
+
+          letter-spacing: 0.08em;
+        }
+
+        .movie-header strong span {
+          color: #a78bfa;
+        }
+
+        .movie-menu {
+          display: flex;
+
+          gap: 5px;
+        }
+
+        .movie-menu i {
+          width: 20px;
+
+          height: 4px;
+
+          border-radius: 99px;
+
+          background:
+            rgba(255,255,255,0.15);
+        }
+
+        .movie-content {
+          margin-top: 28px;
+        }
+
+        .movie-content small {
+          color: #a78bfa;
+
+          font-size: 0.55rem;
+
+          letter-spacing: 0.18em;
+        }
+
+        .movie-content h4 {
+          margin: 7px 0 10px;
+
+          color: white;
+
+          font-size: 1.15rem;
+
+          line-height: 1.2;
+
+          font-weight: 600;
+        }
+
+        .stars {
+          color: #f59e0b;
+
+          font-size: 0.7rem;
+
+          letter-spacing: 0.08em;
+        }
+
+        .movie-posters {
+          position: absolute;
+
+          right: 18px;
+
+          bottom: 22px;
+
+          display: flex;
+
+          gap: 6px;
+        }
+
+        .movie-posters div {
+          width: 48px;
+
+          height: 68px;
+
+          border-radius: 5px;
+
+          border:
+            1px solid
+            rgba(255,255,255,0.08);
+
+          background:
+            linear-gradient(
+              160deg,
+              #5b21b6,
+              #171127
+            );
+        }
+
+        .movie-posters div:nth-child(2) {
+          background:
+            linear-gradient(
+              160deg,
+              #b91c1c,
+              #241012
+            );
+        }
+
+        .movie-posters div:nth-child(3) {
+          background:
+            linear-gradient(
+              160deg,
+              #047857,
+              #071914
+            );
+        }
+
+        .movie-posters div:nth-child(4) {
+          background:
+            linear-gradient(
+              160deg,
+              #1d4ed8,
+              #0b1024
+            );
+        }
+
+        /* ==============================
+           INVOICE PREVIEW
+        ============================== */
+
+        .invoice-preview {
+          display: flex;
+
+          align-items: center;
+
+          justify-content: center;
+
+          padding: 18px;
+
+          background:
+            linear-gradient(
+              135deg,
+              #161021,
+              #0b0b10
+            );
+        }
+
+        .invoice-paper {
+          width: 74%;
+
+          min-height: 175px;
+
+          padding: 16px;
+
+          border-radius: 6px;
+
+          background: #f8f7fb;
+
+          color: #25212e;
+
+          box-shadow:
+            0 15px 35px
+            rgba(0,0,0,0.35);
+
+          transform: rotate(-1deg);
+        }
+
+        .invoice-heading,
+        .invoice-total {
+          display: flex;
+
+          justify-content:
+            space-between;
+
+          align-items: center;
+        }
+
+        .invoice-heading strong {
+          font-size: 0.75rem;
+
+          letter-spacing: 0.08em;
+        }
+
+        .invoice-heading span {
+          color: #8b5cf6;
+
+          font-size: 0.55rem;
+        }
+
+        .invoice-purple-line {
+          height: 1px;
+
+          margin: 8px 0;
+
+          background: #8b5cf6;
+
+          opacity: 0.5;
+        }
+
+        .invoice-info {
+          display: flex;
+
+          justify-content:
+            space-between;
+
+          margin-bottom: 9px;
+        }
+
+        .invoice-info div {
+          display: flex;
+
+          flex-direction: column;
+
+          gap: 2px;
+        }
+
+        .invoice-info small {
+          color: #8b8492;
+
+          font-size: 0.42rem;
+
+          letter-spacing: 0.08em;
+        }
+
+        .invoice-info span {
+          font-size: 0.48rem;
+        }
+
+        .invoice-table {
+          border-top:
+            1px solid #e5e2e9;
+
+          border-bottom:
+            1px solid #e5e2e9;
+
+          padding: 4px 0;
+        }
+
+        .invoice-table div {
+          display: flex;
+
+          justify-content:
+            space-between;
+
+          padding: 3px 0;
+
+          font-size: 0.48rem;
+        }
+
+        .invoice-table div:first-child {
+          color: #8b8492;
+
+          font-size: 0.42rem;
+        }
+
+        .invoice-total {
+          padding-top: 7px;
+
+          font-size: 0.55rem;
+        }
+
+        .invoice-total strong {
+          color: #8b5cf6;
+        }
+
+        /* ==============================
+           RESTAURANT PREVIEW
+        ============================== */
+
+        .restaurant-preview {
+          padding: 20px;
+
+          background:
+            radial-gradient(
+              circle at 75% 15%,
+              rgba(34,211,238,0.18),
+              transparent 30%
+            ),
+
+            linear-gradient(
+              135deg,
+              #07171a,
+              #090d10
+            );
+        }
+
+        .restaurant-header {
+          display: flex;
+
+          justify-content:
+            space-between;
+
+          align-items: center;
+        }
+
+        .restaurant-logo {
+          width: 28px;
+
+          height: 28px;
+
+          display: grid;
+
+          place-items: center;
+
+          border:
+            1px solid
+            rgba(34,211,238,0.5);
+
+          border-radius: 50%;
+
+          color: #67e8f9;
+
+          font-weight: 700;
+        }
+
+        .restaurant-header div {
+          display: flex;
+
+          gap: 6px;
+        }
+
+        .restaurant-header i {
+          width: 22px;
+
+          height: 4px;
+
+          border-radius: 99px;
+
+          background:
+            rgba(255,255,255,0.13);
+        }
+
+        .restaurant-content {
+          margin-top: 28px;
+        }
+
+        .restaurant-content small {
+          color: #67e8f9;
+
+          font-size: 0.5rem;
+
+          letter-spacing: 0.2em;
+        }
+
+        .restaurant-content h4 {
+          margin: 5px 0;
+
+          color: #f4ffff;
+
+          font-size: 1.15rem;
+
+          font-weight: 600;
+        }
+
+        .restaurant-content span {
+          display: block;
+
+          width: 65px;
+
+          height: 2px;
+
+          background: #22d3ee;
+        }
+
+        .restaurant-cards {
+          position: absolute;
+
+          left: 20px;
+
+          right: 20px;
+
+          bottom: 18px;
+
+          display: grid;
+
+          grid-template-columns:
+            repeat(3, 1fr);
+
+          gap: 8px;
+        }
+
+        .restaurant-cards div {
+          padding: 8px;
+
+          border:
+            1px solid
+            rgba(255,255,255,0.08);
+
+          border-radius: 7px;
+
+          background:
+            rgba(255,255,255,0.04);
+        }
+
+        .restaurant-cards div > i {
+          display: block;
+
+          height: 25px;
+
+          margin-bottom: 5px;
+
+          border-radius: 4px;
+
+          background:
+            linear-gradient(
+              135deg,
+              #0e7490,
+              #164e63
+            );
+        }
+
+        .restaurant-cards div:nth-child(2) > i {
+          background:
+            linear-gradient(
+              135deg,
+              #92400e,
+              #422006
+            );
+        }
+
+        .restaurant-cards div:nth-child(3) > i {
+          background:
+            linear-gradient(
+              135deg,
+              #166534,
+              #052e16
+            );
+        }
+
+        .restaurant-cards strong,
+        .restaurant-cards small {
+          display: block;
+
+          overflow: hidden;
+
+          white-space: nowrap;
+
+          text-overflow: ellipsis;
+        }
+
+        .restaurant-cards strong {
+          color: #eaffff;
+
+          font-size: 0.48rem;
+        }
+
+        .restaurant-cards small {
+          margin-top: 2px;
+
+          color:
+            rgba(255,255,255,0.4);
+
+          font-size: 0.38rem;
+        }
+
+        /* ==============================
+           CARD CONTENT
+        ============================== */
+
+        .project-content {
+          padding: 24px;
+        }
+
+        .project-title-row {
+          display: flex;
+
+          align-items: flex-start;
+
+          justify-content:
+            space-between;
+
           gap: 14px;
+
+          margin-bottom: 12px;
         }
-        @keyframes projFade {
-          from { opacity: 0; transform: translateY(30px) scale(0.97); }
-          to   { opacity: 1; transform: translateY(0) scale(1); }
+
+        .project-title-wrap {
+          display: flex;
+
+          align-items: baseline;
+
+          gap: 10px;
         }
-        @keyframes orbFloat {
-          0%,100% { transform: translate(0,0); }
-          33%      { transform: translate(16px,24px); }
-          66%      { transform: translate(-10px,8px); }
+
+        .project-number {
+          color: var(--accent);
+
+          font-size: 0.7rem;
+
+          font-weight: 600;
         }
-        @media(max-width:900px){
-          .projects-section { margin-left: 64px; padding: 4rem 2rem; }
-          .pr-main-grid { grid-template-columns: 1fr; }
-          .pr-mini-grid { grid-template-columns: repeat(2, 1fr); }
+
+        .project-title-wrap h3 {
+          margin: 0;
+
+          color: #f5f5f7;
+
+          font-size: 1.22rem;
+
+          line-height: 1.3;
+
+          font-weight: 600;
+
+          letter-spacing: -0.015em;
         }
+
+        .project-label {
+          flex-shrink: 0;
+
+          padding: 4px 8px;
+
+          border:
+            1px solid
+            rgba(255,255,255,0.1);
+
+          border-radius: 999px;
+
+          color:
+            rgba(255,255,255,0.4);
+
+          font-size: 0.56rem;
+
+          font-weight: 600;
+
+          letter-spacing: 0.1em;
+        }
+
+        .project-description {
+          margin: 0 0 15px;
+
+          color:
+            rgba(255,255,255,0.68);
+
+          font-size: 0.88rem;
+
+          line-height: 1.65;
+
+          font-weight: 400;
+        }
+
+        /* ==============================
+           FEATURES
+        ============================== */
+
+        .project-features {
+          display: flex;
+
+          flex-wrap: wrap;
+
+          gap: 7px 15px;
+
+          margin-bottom: 16px;
+        }
+
+        .project-features span {
+          color:
+            rgba(255,255,255,0.58);
+
+          font-size: 0.68rem;
+
+          line-height: 1.5;
+        }
+
+        .project-features b {
+          margin-right: 4px;
+
+          color: var(--accent);
+        }
+
+        /* ==============================
+           TECHNOLOGIES
+        ============================== */
+
+        .project-tags {
+          display: flex;
+
+          flex-wrap: wrap;
+
+          gap: 7px;
+
+          padding-top: 14px;
+
+          border-top:
+            1px solid
+            rgba(255,255,255,0.07);
+        }
+
+        .project-tags span {
+          padding:
+            5px 10px;
+
+          border-radius: 999px;
+
+          background:
+            rgba(139,92,246,0.07);
+
+          border:
+            1px solid
+            rgba(139,92,246,0.25);
+
+          color: var(--accent);
+
+          font-size: 0.66rem;
+
+          font-weight: 500;
+        }
+
+        /* ==============================
+           BUTTONS
+        ============================== */
+
+        .project-actions {
+          display: flex;
+
+          gap: 9px;
+
+          margin-top: 18px;
+
+          padding-top: 16px;
+
+          border-top:
+            1px solid
+            rgba(255,255,255,0.07);
+        }
+
+        .project-button {
+          min-width: 120px;
+
+          display: inline-flex;
+
+          align-items: center;
+
+          justify-content: center;
+
+          gap: 7px;
+
+          padding:
+            9px 15px;
+
+          border-radius: 8px;
+
+          text-decoration: none;
+
+          font-family:
+            "Poppins",
+            sans-serif;
+
+          font-size: 0.7rem;
+
+          font-weight: 500;
+
+          transition:
+            transform 0.2s ease,
+            background 0.2s ease;
+        }
+
+        .project-button:hover {
+          transform:
+            translateY(-2px);
+        }
+
+        .live-button {
+          color: #0b0c10;
+
+          background:
+            var(--accent);
+
+          border:
+            1px solid
+            var(--accent);
+        }
+
+        .github-button {
+          color:
+            rgba(255,255,255,0.78);
+
+          background:
+            rgba(255,255,255,0.04);
+
+          border:
+            1px solid
+            rgba(255,255,255,0.14);
+        }
+
+        .github-button:hover {
+          color: white;
+
+          background:
+            rgba(255,255,255,0.09);
+        }
+
+        /* ==============================
+           ANIMATION
+        ============================== */
+
+        @keyframes projectEnter {
+          from {
+            opacity: 0;
+
+            transform:
+              translateY(18px);
+          }
+
+          to {
+            opacity: 1;
+
+            transform:
+              translateY(0);
+          }
+        }
+
+        /* ==============================
+           TABLET
+        ============================== */
+
+        @media (max-width: 1100px) {
+
+          .projects-section {
+            margin-left: 180px;
+          }
+
+        }
+
+        /* ==============================
+           MOBILE
+        ============================== */
+
+        @media (max-width: 900px) {
+
+          .projects-section {
+            margin-left: 64px;
+
+            padding:
+              5rem 2rem;
+          }
+
+          .projects-grid {
+            grid-template-columns: 1fr;
+          }
+
+        }
+
+        @media (max-width: 600px) {
+
+          .projects-section {
+            margin-left: 0;
+
+            padding:
+              5rem 1.1rem
+              4rem;
+          }
+
+          .pr-title {
+            font-size: 2.8rem;
+          }
+
+          .pr-subtitle {
+            font-size: 0.88rem;
+
+            margin-bottom: 3rem;
+          }
+
+          .project-preview {
+            height: 190px;
+          }
+
+          .project-content {
+            padding: 20px 18px;
+          }
+
+          .project-title-wrap h3 {
+            font-size: 1.08rem;
+          }
+
+          .project-description {
+            font-size: 0.84rem;
+          }
+
+          .project-actions {
+            gap: 8px;
+          }
+
+          .project-button {
+            min-width: 0;
+
+            flex: 1;
+
+            padding:
+              9px 10px;
+
+            font-size: 0.66rem;
+          }
+
+        }
+
       `}</style>
 
       <section
         id="projects"
         className="projects-section"
         ref={sectionRef}
-        onMouseMove={(e) => {
-          const rect = sectionRef.current?.getBoundingClientRect();
-          if (rect) setMousePos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-        }}
       >
-        <div className="pr-mouse-glow" style={{ left: mousePos.x, top: mousePos.y }}/>
-        <div className="pr-orb" style={{ width: 400, height: 400, background: "#5b4fcf", top: -120, right: -80, animation: "orbFloat 14s ease-in-out infinite" }}/>
-        <div className="pr-orb" style={{ width: 250, height: 250, background: "#0e9f6e", bottom: 100, left: "5%", animation: "orbFloat 18s ease-in-out infinite reverse" }}/>
-
         <div className="pr-inner">
-          <div className="pr-label" style={fadeUp(0.1)}>
-            <span className="pr-label-line"/>Projects
+
+          {/* Heading */}
+
+          <div
+            className="pr-label"
+            style={{
+              opacity: visible ? 1 : 0,
+              transform: visible
+                ? "translateY(0)"
+                : "translateY(18px)",
+              transition:
+                "all 0.5s ease",
+            }}
+          >
+            <span className="pr-label-line" />
+            Projects
           </div>
-          <h2 className="pr-title" style={fadeUp(0.2)}>What I've Built</h2>
-          <div className="pr-divider" style={fadeUp(0.25)}/>
-          <p className="pr-subtitle" style={fadeUp(0.3)}>
-            Real-world applications crafted with the MERN stack
+
+          <h2
+            className="pr-title"
+            style={{
+              opacity: visible ? 1 : 0,
+              transform: visible
+                ? "translateY(0)"
+                : "translateY(18px)",
+              transition:
+                "all 0.6s ease 0.05s",
+            }}
+          >
+            What I've Built
+          </h2>
+
+          <div className="pr-divider" />
+
+          <p className="pr-subtitle">
+            Selected projects built with React,
+            JavaScript, and the MERN stack
           </p>
 
-          <div style={fadeUp(0.35)}>
-            <div className="pr-section-label">
-              <span className="pr-section-label-text">// main_projects</span>
-              <div className="pr-section-label-line"/>
-            </div>
-          </div>
-          <div className="pr-main-grid">
-            {MAIN_PROJECTS.map((p, i) => (
-              <MainCard key={p.id} project={p} index={i} started={started} />
-            ))}
-          </div>
+          {/* Frontend */}
 
-          <div style={fadeUp(0.4)}>
-            <div className="pr-section-label">
-              <span className="pr-section-label-text">// mini_projects</span>
-              <div className="pr-section-label-line"/>
-            </div>
-          </div>
-          <div className="pr-mini-grid">
-            {MINI_PROJECTS.map((p, i) => (
-              <MiniCard key={p.title} project={p} index={i} started={started} />
-            ))}
-          </div>
+          <ProjectGroup
+            title="Frontend Projects"
+            projects={FRONTEND_PROJECTS}
+            visible={visible}
+          />
+
+          {/* Full Stack */}
+
+          <ProjectGroup
+            title="Full-Stack Projects"
+            projects={FULLSTACK_PROJECTS}
+            visible={visible}
+          />
+
         </div>
       </section>
     </>
